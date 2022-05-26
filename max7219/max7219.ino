@@ -7,9 +7,9 @@ https://wayoda.github.io/LedControl/
 
 #include <LedControl.h>
 
-#define CLK         13 // Clock 
+#define DIN         12 // Data In
+#define CLK         11 // Clock 
 #define CS          10 // ChipSelect    
-#define DIN         11 // Data In
 #define MAX_DEVICES 8  // Maximum number that can be theoretically controlled
 
 int DELAY = 50;  // Blink time in ms
@@ -19,10 +19,10 @@ int COLS = 8;
 // Number of connected devices
 int kDevices;
 
-LedControl lc = LedControl(DIN, CS, DIN, MAX_DEVICES); 
+LedControl lc = LedControl(DIN, CLK, CS, 1); 
 
 void setup() {
-  kDevices = lc.getDeviceCount();
+  kDevices = 1;
 
   // "wake up" the devices 
   for (int d=0; d < kDevices; d++) {
@@ -32,17 +32,15 @@ void setup() {
   }
 }
 
+
 void loop() {
-  for (int col = 0; col < COLS; col++) {
-    for (int row = 0; row < ROWS; row++) {
-      for (int device = 0; device < kDevices; device++) {
-        lc.setLed(device, row, ((row & 0) ? (col) : (COLS - col)), true);
-      } 
+  for (int row=0; row < ROWS; row++) {
+    for (int col=0; col < COLS; col++) {
+      lc.setLed(0, row, (row%2) ? (col) : (COLS-1-col), true);
       delay(DELAY);
-      for (int device = 0; device < kDevices; device++) {
-        lc.setLed(device, row, ((row & 0) ? (col) : (COLS - col)), false);
-      } 
+      lc.setLed(0, row, (row%2) ? (col) : (COLS-1-col), false);
       delay(DELAY);
     }
+
   }
 }
