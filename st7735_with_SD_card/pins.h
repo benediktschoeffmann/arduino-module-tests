@@ -16,7 +16,7 @@ That would be 8+4 pinb which is way to much.
 So far, I found the following information: 
 SPI pins for Arduino Nano 
 D11 (MOSI - Microcontroller out, Serial In -> Display),
-D12 (MISO - Microcontroller in, Serial Out -> SD),
+D12 (MISO - Microcontroller in, Serial Out -> SD), 
 D13 (SCK). 
 CS (Chip Select) can be any pin, commonly D10 is used. 
 
